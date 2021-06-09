@@ -222,7 +222,7 @@ function Profile() {
         });
       });
   }, [pets]);
-
+console.log("ok");
   const renderUserAnimals = () => {
     if (pets.length)
       return pets.map((pet, index) => {
