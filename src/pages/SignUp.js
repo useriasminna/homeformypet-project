@@ -10,11 +10,13 @@ import firebase, { db, auth } from "utils/firebase";
 import { useHistory } from "react-router";
 import FormLogo from "components/common/FormLogo";
 
-const SignUpBody = styled.body`
+const SignUpBody = styled.div`
+  width: 100%;
+  height: 100%;
   background-color: #fae6c1;
   background-image: linear-gradient(to right, #fae6c1, #ffffff);
   position: relative;
-  overflow: scroll;
+  overflow: overlay;
 `;
 
 const CenteredWrap = styled.div`
@@ -64,14 +66,16 @@ const FooterContainer = styled.div`
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 `;
-// const SignUpLabel = styled.span`
-//   display: flex;
-//   align-self: center;
-//   margin-bottom: 20px;
-//   color: darkgreen;
-//   font-size: 15px;
-// `;
+const Title = styled.div`
+  display: flex;
+  align-self: center;
+  color: #1890ff;
+  font-size: 25px;
+  font-weight: bolder;
+`;
+
 const NameContainer = styled.div`
+  margin-top: 30px;
   width: 502px;
   display: flex;
   justify-content: space-between;
@@ -217,6 +221,7 @@ function SignUp() {
       <CenteredWrap>
         <MainContainer>
           <FormLogo />
+          <Title>JOIN US NOW!</Title>
           <Form>
             <NameContainer>
               <FormItem
@@ -313,13 +318,6 @@ function SignUp() {
                   name="phoneNumber"
                   rules={[
                     { required: true, message: "This field is required!" },
-                    // {
-                    //   type: "number",
-                    //   pattern: /^[0-9\b]+$/,
-
-                    //   len: 9,
-                    //   message: "Not a valid type!",
-                    // },
                   ]}
                 >
                   <Input

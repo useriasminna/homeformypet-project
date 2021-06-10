@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import AppLogo from "assets/logo.png";
+import { auth } from "utils/firebase";
 import { useHistory } from "react-router";
+import { ExportOutlined } from "@ant-design/icons";
 
 const Header = styled.div`
   height: 60px;
@@ -33,8 +35,10 @@ const Header = styled.div`
       display: none;
     }
   }
+`;
+const LogoContainer = styled.div`
   img {
-    height: 150px;
+    height: 55px;
     max-width: 100%;
     object-fit: contain;
     position: absolute;
@@ -42,8 +46,31 @@ const Header = styled.div`
     transform: translateX(-50%);
   }
 `;
+const LogOutButton = styled.button`
+  font-size: 12px;
+  text-align: center;
+  border: none;
+  width: 70px;
+  background-color: #3f913f;
+  border-radius: 5px;
+  padding: 3px;
+  margin-right: 107px;
+  color: white;
+  opacity: 1;
+  transition: 0.3s;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 
-function AppHeader(userPhoto, username, NavbarMenu, setIsOpenedModal) {
+  :hover {
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  @media (max-width: 735px) {
+    justify-content: space-between;
+    width: 100%;
+  }
+`;
+
+function AppHeader(userPhoto, username, setIsOpenedModal, openUploadModal) {
   const history = useHistory();
   const navigateToPage = (e, linkTo) => {
     e.preventDefault();
@@ -53,21 +80,25 @@ function AppHeader(userPhoto, username, NavbarMenu, setIsOpenedModal) {
   return (
     <Header>
       <div className="container">
-        <a
-          className="logo-link"
-          href="/"
-          onClick={(e) => navigateToPage(e, "/")}
+        <LogoContainer>
+          <a
+            className="logo-link"
+            href="/"
+            onClick={(e) => navigateToPage(e, "/")}
+          >
+            <img src={AppLogo} alt="instagram logo" />
+          </a>
+        </LogoContainer>
+
+        <LogOutButton
+          key="logout"
+          onClick={(e) => {
+            auth.signOut();
+            navigateToPage(e, "/login");
+          }}
         >
-          <img src={AppLogo} alt="instagram logo" />
-        </a>
-        {NavbarMenu ? (
-          <NavbarMenu
-            username={username}
-            userPhoto={userPhoto}
-            openUploadModal={() => setIsOpenedModal(true)}
-            navigateToPage={navigateToPage}
-          />
-        ) : undefined}
+          Log Out
+        </LogOutButton>
       </div>
     </Header>
   );

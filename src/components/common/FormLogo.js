@@ -6,9 +6,12 @@ const FormLogoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
   img {
-    height: 180px;
+    height: 70px;
     object-fit: contain;
+      /* margin-bottom: 30px; */
+
   }
 `;
 

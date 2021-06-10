@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-// import AppHeader from "components/common/AppHeader";
+import AppHeader from "components/common/AppHeader";
 // import AppFooter from "components/common/AppFooter";
 import { CameraOutlined } from "@ant-design/icons";
 import AvatarUploadModal from "components/AvatarUploadModal";
@@ -15,6 +15,7 @@ const OwnerFormBody = styled.body`
   align-content: center;
   justify-content: center;
   position: relative;
+  overflow: auto;
 `;
 const FormContainer = styled.div`
   position: absolute;
@@ -92,21 +93,34 @@ const PetsDetails = styled.div`
   }
 `;
 const AnimalsContainer = styled.div`
-  overflow: scroll;
+  overflow: overlay;
   height: 400px;
+  padding: 50px;
 `;
 const AnimalFormContainer = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   border: 1px solid lightgray;
   padding: 15px;
+  background-color: #fcfcfc;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 const RemoveButton = styled(Button)`
-  background-color: #f2eded;
+  background-color: #e4e4e4;
   margin-right: 10px;
+  :hover {
+    background-color: lightgray;
+    color: white;
+    border: 1px solid lightgray;
+  }
 `;
 const AddButton = styled(Button)`
-  background-color: #057d05;
+  background-color: darkgreen;
   color: white;
+  :hover {
+    background-color: #00b700;
+    color: white;
+    border: 1px solid #00b700;
+  }
 `;
 const SubmitButton = styled(Button)`
   width: 150px;
@@ -228,7 +242,7 @@ function OwnerForm() {
 
   return (
     <OwnerFormBody>
-      {/* <AppHeader /> */}
+      <AppHeader />
       <FormContainer>
         <FormDivider orientation="left">
           <strong>BECOME PET OWNER</strong>{" "}
@@ -256,7 +270,7 @@ function OwnerForm() {
         <PetsDetails>
           {" "}
           <div>
-            <strong>
+            <strong style={{ marginLeft: 50 }}>
               <Required>* </Required>2. Complete the details about your pet/pets{" "}
             </strong>
           </div>

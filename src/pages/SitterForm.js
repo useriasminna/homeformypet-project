@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-// import AppHeader from "components/common/AppHeader";
+import AppHeader from "components/common/AppHeader";
 // import AppFooter from "components/common/AppFooter";
 import { CameraOutlined } from "@ant-design/icons";
 import AvatarUploadModal from "components/AvatarUploadModal";
@@ -15,6 +15,7 @@ const SitterFormBody = styled.body`
   align-content: center;
   justify-content: center;
   position: relative;
+  overflow: auto;
 `;
 const FormContainer = styled.div`
   position: absolute;
@@ -161,7 +162,7 @@ function SitterForm() {
 
   return (
     <SitterFormBody>
-      {/* <AppHeader /> */}
+      <AppHeader />
       <FormContainer>
         <FormDivider orientation="left">
           <strong>BECOME PET SITTER</strong>{" "}
@@ -207,8 +208,8 @@ function SitterForm() {
               name="experience"
               value={experience}
               onChange={(e) => setExperience(e.target.value)}
-              autoSize={{ minRows: 4, maxRows: 7 }}
-              maxLength={300}
+              autoSize={{ minRows: 4, maxRows: 10 }}
+              maxLength={1000}
             />
           </FormItem>
           <FormItem>

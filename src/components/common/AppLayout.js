@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { auth, db } from "utils/firebase";
 import UploadModal from "components/PostUploadModal";
-import AppHeader from "./AppHeader";
-import NavbarMenu from "components/NavbarMenu";
-import AppFooter from "./AppFooter";
+import NavAppHeader from "./NavAppHeader";
+// import AppFooter from "./AppFooter";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -24,6 +23,7 @@ const AppContainer = styled.div`
 
 function AppLayout({ children }) {
   const [user, setUser] = useState();
+  // const[]
   const [username, setUsername] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
 
@@ -34,26 +34,24 @@ function AppLayout({ children }) {
       setUser(authUser);
 
       db.collection("users")
-        .doc(user?.uid)
-        .onSnapshot((snpashot) => {
-          if (snpashot.exists) {
-            setUsername(snpashot.data().userName);
-            setUserPhoto(snpashot.data().profilePicture);
+        .doc(auth.currentUser.uid)
+        .onSnapshot((snapshot) => {
+          if (snapshot.exists) {
+            // setId(snapshot.data().firstName)
+            setUsername(snapshot.data().firstName);
+            setUserPhoto(snapshot.data().profilePicture);
           }
         });
     });
-
     return () => unsubscribe();
   }, [user]);
-
   return (
     <AppContainer>
-      <AppHeader
+      <NavAppHeader
         username={username}
-        userPhoto={userPhoto}
         setIsOpenedModal={setIsOpenedModal}
-        NavbarMenu={NavbarMenu}
-      ></AppHeader>
+        userPhoto={userPhoto}
+      ></NavAppHeader>
       {/* <AppContent className="container">{children}</AppContent> */}
       {children}
       <UploadModal

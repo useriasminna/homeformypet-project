@@ -6,25 +6,30 @@ import { auth, db } from "utils/firebase";
 import AvatarUploadModal from "components/AvatarUploadModal";
 import { useParams } from "react-router-dom";
 import { MdLocationOn } from "react-icons/md";
+import { FaCat, FaDog } from "react-icons/fa";
 
-const ProfileBody = styled.body`
-  overflow: auto;
+const ProfileBody = styled.div`
+  width: 100%;
+  height: fit-content;
+  background-color: white;
 `;
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: whitesmoke;
 `;
 
 const ProfileDetailsUpSection = styled.div`
-  top: 20%;
   display: flex;
-  width: 80%;
-  height: 300px;
+  width: 70%;
+  height: 240px;
   align-items: center;
   justify-items: baseline;
-  border-bottom: 1px solid lightgrey;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+  margin-top: 40px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 
 const CameraIcon = styled(CameraOutlined)`
@@ -73,7 +78,7 @@ const ProfileInfo = styled.div`
 `;
 
 const FullName = styled.span`
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 300;
   margin-bottom: 5px;
 `;
@@ -82,7 +87,7 @@ const Type = styled.span`
   margin-bottom: 5px;
 `;
 const Slogan = styled.span`
-  font-size: 19px;
+  font-size: 15px;
   font-style: italic;
   margin-bottom: 15px;
 `;
@@ -92,22 +97,26 @@ const City = styled.span`
 `;
 const ProfileDetailsDownSection = styled.div`
   display: flex;
-  width: 80%;
-  height: 500px;
+  width: 70%;
+  padding: 30px;
+  height: fit-content;
   justify-items: baseline;
-  border-bottom: 1px solid lightgrey;
-  margin-bottom: 50px;
+  margin-bottom: 80px;
   justify-content: space-between;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 const Experience = styled.span`
   padding: 10px;
   display: flex;
   flex-direction: column;
-  font-size: 16px;
-  height: 200px;
+  font-size: 14px;
+  font-style: italic;
+  height: fit-content;
   width: 60%;
+  margin-bottom: 30px;
   strong {
-    font-size: 25px;
+    font-size: 20px;
     margin-bottom: 20px;
   }
 `;
@@ -115,57 +124,79 @@ const ContactSection = styled.span`
   padding: 10px;
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 35%;
   height: fit-content;
   background-color: lightgray;
   border-radius: 15px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   strong {
-    font-size: 25px;
+    font-size: 20px;
     margin-bottom: 20px;
     justify-self: center;
     align-self: center;
   }
 `;
 const ContactElement = styled.span`
-  font-size: 15px;
+  font-size: 14px;
   margin-bottom: 10px;
   margin-left: 20px;
 `;
 const Animals = styled.div`
-  height: 500px;
-`;
-const ProfileStats = styled.span`
-  font-size: 16px;
-`;
-
-const ProfilePosts = styled.div`
+  height: fit-content;
   display: flex;
-  flex-wrap: wrap;
-  width: 900px;
+  flex-direction: column;
 `;
+// const ProfileStats = styled.span`
+//   font-size: 16px;
+// `;
 
-const PostContainer = styled.div`
-  width: 280px;
-  height: 280px;
+// const ProfilePosts = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+//   width: 900px;
+// `;
+const PetContainer = styled.div`
+  width: 500px;
+  border: 1px solid whitesmoke;
+  margin-bottom: 20px;
+  padding: 20px 30px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+const PetInfo = styled.div`
+  padding: 0px 30px 10px 30px;
+  height: fit-content;
   margin-bottom: 30px;
-  margin-right: 30px;
+
+  border-bottom: 1px solid lightgray;
+
   :nth-child(3n + 3) {
     margin-right: 0;
   }
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  /*  */
 `;
+const PetDescription = styled.div`
+  padding: 0 30px;
 
+  font-size: 13px;
+  font-style: italic;
+`;
+const CatIcon = styled(FaCat)`
+  height: 50px;
+`;
+const DogIcon = styled(FaDog)`
+  height: 50px;
+`;
 function Profile() {
   //   const [alreadyFollowed, setAlreadyFollowed] = useState("");
   // const [followers, setFollowers] = useState([]);
   // const [following, setFollowing] = useState([]);
   const [profilePicture, setProfilePicture] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [fullName, setFullName] = useState("");
   const [slogan, setSlogan] = useState("");
   const [type, setType] = useState("");
@@ -185,19 +216,20 @@ function Profile() {
   // const [petName, setPetName] = useState("");
   // const [petAge, stePetAge] = useState("");
   // const [petDescription, setPetDescription] = useState("");
-
   useEffect(() => {
     db.collection("users")
-      .where("id", "==", "1f20BTJSKVcCkrJwyfjTv7KYzWr1")
+      .where("id", "==", id)
       .get()
       .then((userData) => {
         setProfileId(userData.docs[0].id);
         setProfilePicture(userData.docs[0].data().profilePicture);
+        setFirstName(userData.docs[0].data().firstName);
         setFullName(
           userData.docs[0].data().firstName +
             " " +
             userData.docs[0].data().lastName
         );
+
         setType(userData.docs[0].data().type);
         setSlogan(userData.docs[0].data().slogan);
         setExperience(userData.docs[0].data().experience);
@@ -205,30 +237,49 @@ function Profile() {
         setPhoneNumber(userData.docs[0].data().phoneNumber);
         setCity(userData.docs[0].data().city);
 
-        db.collection("pets").onSnapshot(async (snapshot) => {
-          const filteredPets = snapshot.docs.filter(
-            (doc) => doc.data().petId === userData.docs[0].data().id
-          );
+        db.collection("users")
+          .doc(userData.docs[0].data().id)
+          .collection("pets")
+          .onSnapshot(async (snapshot) => {
+            const petsCollection = snapshot.docs;
+            // console.log(filteredPets);
 
-          return Promise.all(
-            filteredPets.map(async (pet) => {
-              return {
-                id: pet.id,
-                ...pets.data(),
-              };
-
-            })
-          ).then(setPets);
-        });
+            return Promise.all(
+              petsCollection.map(async (pet) => {
+                return {
+                  id: pet.id,
+                  ...pet.data(),
+                };
+              })
+            ).then(setPets);
+          });
       });
-  }, [pets]);
-console.log("ok");
+  }, [id]);
+
+  // console.log(pets);
   const renderUserAnimals = () => {
-    if (pets.length)
+    if (pets.length) {
       return pets.map((pet, index) => {
-        return <PostContainer key={index}>{pet.name}</PostContainer>;
+        return (
+          <PetContainer key={index}>
+            <PetInfo>
+              {firstName} owns a
+              {pet.petType.toLowerCase() === "cat" ? (
+                <CatIcon size={70} />
+              ) : pet.petType.toLowerCase() === "dog" ? (
+                <DogIcon size={70} />
+              ) : (
+                pet.petType.toLowerCase()
+              )}
+              named <strong>{pet.name.toUpperCase()}</strong>, age {pet.age}
+            </PetInfo>
+            <PetDescription>
+              <q>{pet.description}</q>
+            </PetDescription>
+          </PetContainer>
+        );
       });
-    return null;
+    }
   };
 
   return (
@@ -237,7 +288,7 @@ console.log("ok");
         <ProfileDetailsUpSection>
           <AvatarWrapper>
             <CameraIcon onClick={() => setIsModalOpen(true)} />
-            <MyAvatar size={200} src={profilePicture}></MyAvatar>
+            <MyAvatar size={180} src={profilePicture}></MyAvatar>
           </AvatarWrapper>
           <ProfileInfo>
             <FullName>
@@ -254,7 +305,9 @@ console.log("ok");
           {type === "sitter" ? (
             <Experience>
               <strong>Experience</strong>
-              <div>{experience}</div>
+              <div>
+                <q>{experience}</q>
+              </div>
             </Experience>
           ) : (
             <Animals>{renderUserAnimals()}</Animals>

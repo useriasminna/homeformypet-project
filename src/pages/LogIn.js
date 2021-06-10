@@ -13,9 +13,12 @@ import FormLogo from "components/common/FormLogo";
 import FormMainContainer from "components/common/FormMainContainer";
 import FormFooterContainer from "components/common/FormFooterContainer";
 
-const LogInBody = styled.body`
+const LogInBody = styled.div`
+  width: 100%;
+  height: 100%;
   background-color: #fae6c1;
   background-image: linear-gradient(to right, #fae6c1, #ffffff);
+  overflow: overlay;
 `;
 const CenteredWrap = styled.div`
   height: 100%;
@@ -46,7 +49,7 @@ function LogIn() {
     e.preventDefault();
     auth
       .signInWithEmailAndPassword(email, password)
-      .then(async () => history.push("/"))
+      .then(async () => history.push("/profile"))
       .catch((err) => setErrorMessage(err.message));
   };
 
@@ -55,61 +58,53 @@ function LogIn() {
       <CenteredWrap>
         <FormMainContainer onSubmit={handleLogin}>
           <FormLogo />
-          <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{
-              remember: true,
-            }}
+
+          <Form.Item
+            name="email"
+            rules={[
+              { required: true, message: "Please introduce your email!" },
+            ]}
           >
-            <Form.Item
-              name="email"
-              rules={[
-                { required: true, message: "Please introduce your email!" },
-              ]}
-            >
-              <Input
-                prefix={<MailOutlined />}
-                placeholder="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+            <Input
+              prefix={<MailOutlined />}
+              placeholder="Email"
+              type="email"
+              value={email}
+              style={{ width: 400, marginTop: 30 }}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: "Please input your Password!" }]}
+          >
+            <Input.Password
+              prefix={<LockOutlined />}
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+            />
+            <div style={{ width: 400, whiteSpace: "normal", height: 35 }}>
+              <Error>{errorMessage}</Error>
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <Form.Item name="remember" valuePropName="checked" noStyle>
+              <Checkbox checked>Remember me</Checkbox>
             </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[
-                { required: true, message: "Please input your Password!" },
-              ]}
-            >
-              <Input.Password
-                prefix={<LockOutlined />}
-                placeholder="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-              />
-              <div style={{ width: 400, whiteSpace: "normal", height: 35 }}>
-                <Error>{errorMessage}</Error>
-              </div>
-            </Form.Item>
-            <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox checked>Remember me</Checkbox>
-              </Form.Item>
-              <a className="login-form-forgot" href="/resetpassword">
-                Forgot password?
-              </a>
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit" onClick={handleLogin}>
-                Log in
-              </Button>
-            </Form.Item>
-          </Form>
+            <a className="login-form-forgot" href="/resetpassword">
+              Forgot password?
+            </a>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" onClick={handleLogin}>
+              Log in
+            </Button>
+          </Form.Item>
         </FormMainContainer>
         <FormFooterContainer>
           <span>

@@ -67,7 +67,7 @@ function Messages() {
     db.collection("users")
       .doc(auth.currentUser.uid)
       .onSnapshot((snpashot) => {
-        if (snpashot.exists) setUsername(snpashot.data().userName);
+        if (snpashot.exists) setUsername(snpashot.data().firstName);
       });
   }, []);
 

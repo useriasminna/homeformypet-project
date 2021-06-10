@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-const Footer = styled.div`
-  position: absolute;
+const Footer = styled.footer`
+  /* position: absolute; */
   left: 0%;
   bottom: 0%;
   top: 100%;

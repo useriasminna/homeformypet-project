@@ -73,18 +73,16 @@ function App() {
         <Route exact path="/signup">
           <Redirect to="/welcome" />
         </Route>
-        <Route exact path="/login">
-          <Redirect to="/welcome" />
-        </Route>
+        <Route exact path="/login"></Route>
+        <Route exact path="/welcome" component={Welcome} />
+        <Route exact path="/ownerform" component={OwnerForm} />
+        <Route exact path="/sitterform" component={SitterForm} />
+
         <AppLayout>
-          <Route exact path="/welcome" component={Welcome} />
-          <Route exact path="/ownerform" component={OwnerForm} />
-          <Route exact path="/sitterform" component={SitterForm} />
           <Route exact path="/direct" component={Messages} />
           <Route exact path="/explore" component={Explore} />
-          <Route path="/profile" component={Profile}>
-            <Profile />
-          </Route>
+          <Route path="/profile/:id" component={Profile} />
+
           <Route path="/post/:postid">
             <PostDetails />
           </Route>
@@ -96,9 +94,6 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/welcome" component={Welcome} />
-        <Route exact path="/ownerform" component={OwnerForm} />
-        <Route exact path="/sitterform" component={SitterForm} />
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/resetpassword" component={ResetPassword} />
         {/* <Route path="/">

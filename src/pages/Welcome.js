@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-// import AppHeader from "components/common/AppHeader";
+import AppHeader from "components/common/AppHeader";
 import sitter from "assets/sitter.jpg";
 import owner from "assets/owner.jpg";
 // import AppFooter from "components/common/AppFooter";
@@ -12,7 +12,7 @@ const WelcomeBody = styled.body`
   background-color: #fffaf0;
   align-content: center;
   justify-content: center;
-  /* overflow: scroll; */
+  overflow: auto;
   position: relative;
 `;
 const WelcomeContainer = styled.div`
@@ -122,7 +122,7 @@ function Welcome() {
 
   return authentication.loggedIn ? (
     <WelcomeBody>
-      {/* <AppHeader /> */}
+      <AppHeader />
       <WelcomeContainer>
         <WelcomeText>
           <h1>Thank you for your registration!</h1>
