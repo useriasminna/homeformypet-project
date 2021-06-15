@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AppHeader from "components/common/AppHeader";
 import sitter from "assets/sitter.jpg";
 import owner from "assets/owner.jpg";
-// import AppFooter from "components/common/AppFooter";
 import SectionBreak from "components/common/SectionBreak";
 import { useHistory } from "react-router";
 import { auth } from "utils/firebase";
@@ -122,7 +120,6 @@ function Welcome() {
 
   return authentication.loggedIn ? (
     <WelcomeBody>
-      <AppHeader />
       <WelcomeContainer>
         <WelcomeText>
           <h1>Thank you for your registration!</h1>
@@ -156,7 +153,6 @@ function Welcome() {
         </OptionsContainer>
         <SectionBreak />
       </WelcomeContainer>
-      {/* <AppFooter /> */}
     </WelcomeBody>
   ) : null;
 }

@@ -3,7 +3,7 @@ import { Avatar, Button } from "antd";
 import styled from "styled-components";
 import firebase, { auth, db } from "utils/firebase";
 import { useHistory } from "react-router";
-import { MessageOutlined, FormOutlined } from "@ant-design/icons";
+import { TiMessages } from "react-icons/ti";
 
 const ChatContainer = styled.div`
   display: flex;
@@ -16,9 +16,10 @@ const ChatHeader = styled.div`
   height: 60px;
   align-items: center;
   padding: 0 20px;
+  background-color: #f3ebde;
 `;
 
-const FormIcon = styled(FormOutlined)`
+const MessagesIcon = styled(TiMessages)`
   font-size: 25px;
   color: #fff;
   color: rgba(0, 0, 0, 0.85);
@@ -70,8 +71,8 @@ const SentMessage = styled.div`
   align-items: center;
   margin-bottom: 8px;
   .text {
-    background: #efefef;
-    border: 1px solid #efefef;
+    background: #f3ebde;
+    border: 1px solid #f3ebde;
     display: flex;
     align-items: center;
     max-width: 236px;
@@ -92,8 +93,8 @@ const ReceivedMessage = styled.div`
   margin-bottom: 8px;
   align-items: center;
   .text {
-    background: #ffffff;
-    border: 1px solid #efefef;
+    background: #ececec;
+    border: 1px solid #ececec;
     display: flex;
     align-items: center;
     max-width: 236px;
@@ -282,25 +283,26 @@ function Chat({ chatid, openNewChatModal }) {
       {userInfo ? (
         <ChatHeader>
           <a
-            href={`/profile/${userInfo.userName}`}
-            onClick={(e) => navigateToPage(e, "/profile/" + userInfo.userName)}
+            href={`/profile/${userInfo.id}`}
+            onClick={(e) => navigateToPage(e, "/profile/" + userInfo.id)}
           >
             <UserPhotoHeader
               size={40}
               src={userInfo.profilePicture}
-              alt={userInfo.userName}
+              alt={userInfo.firstName}
             >
-              {userInfo.userName?.[0]?.toUpperCase()}
+              {userInfo.firstName?.[0]?.toUpperCase()}
             </UserPhotoHeader>
           </a>
           <UserDetails
-            href={`/profile/${userInfo.userName}`}
-            onClick={(e) => navigateToPage(e, "/profile/" + userInfo.userName)}
+            href={`/profile/${userInfo.id}`}
+            onClick={(e) => navigateToPage(e, "/profile/" + userInfo.id)}
           >
-            <div className="username">{userInfo.userName}</div>
-            <div className="fullname">{userInfo.fullName}</div>
+            <div className="username">
+              {userInfo.firstName + " " + userInfo.lastName}
+            </div>
           </UserDetails>
-          <FormIcon onClick={openNewChatModal} />
+          <MessagesIcon onClick={openNewChatModal} />
         </ChatHeader>
       ) : null}
       <ChatContent>{renderMessages()}</ChatContent>
@@ -325,9 +327,9 @@ function Chat({ chatid, openNewChatModal }) {
     </ChatContainer>
   ) : (
     <NoChatSelected>
-      <MessageOutlined />
+      <TiMessages />
       <h1>Your Messages</h1>
-      <p>Send messages to a friend or any other person.</p>
+      <p>Chat with your favourites pet lovers.</p>
       <Button type="primary" onClick={openNewChatModal}>
         Send Message
       </Button>

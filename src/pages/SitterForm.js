@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import AppHeader from "components/common/AppHeader";
-// import AppFooter from "components/common/AppFooter";
 import { CameraOutlined } from "@ant-design/icons";
 import AvatarUploadModal from "components/AvatarUploadModal";
 import { auth, db } from "utils/firebase";
@@ -111,7 +109,7 @@ function SitterForm() {
 
   useEffect(
     () => auth.onAuthStateChanged((user) => setProfilePicture(user.photoURL)),
-    []
+    [profilePicture]
   );
 
   const openNotificationAvatarError = (type) => {
@@ -156,13 +154,12 @@ function SitterForm() {
     } else if ((experience = "")) {
       openNotificationExperienceError("error");
     } else {
-      history.push("/profile");
+      history.push("/home");
     }
   };
 
   return (
     <SitterFormBody>
-      <AppHeader />
       <FormContainer>
         <FormDivider orientation="left">
           <strong>BECOME PET SITTER</strong>{" "}
@@ -184,6 +181,7 @@ function SitterForm() {
             isOpened={isModalOpen}
             setIsOpen={setIsModalOpen}
             setAvatar={setProfilePicture}
+            updateDb="false"
           />
         </UserDetails>
         <SectionBreak />{" "}

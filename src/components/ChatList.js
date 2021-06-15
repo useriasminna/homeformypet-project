@@ -81,35 +81,40 @@ function ChatList({ openedChat, setOpenedChat }) {
                 doc.data().secondUser === auth.currentUser.uid
             )
             .map(async (doc) => {
-              let userid, username, avatarUrl, fullname, lastActive;
+              let userid, username, avatarUrl, fullName, lastActive;
 
               if (doc.data().firstUser === auth.currentUser.uid)
                 userid = doc.data().secondUser;
               else userid = doc.data().firstUser;
+              console.log(doc.data().secondUser);
+              console.log(doc.data().firstUser);
 
               await db
                 .collection("users")
                 .doc(userid)
                 .get()
                 .then((userDoc) => {
-                  username = userDoc.data().userName;
+                  username = userDoc.data().firstName;
                   avatarUrl = userDoc.data().profilePicture;
-                  fullname = userDoc.data().fullName;
+                  fullName =
+                    userDoc.data().firstName + " " + userDoc.data().lastName;
                   lastActive = timeSince(
                     userDoc.data().userLastActive.toDate()
                   );
                 });
               return {
                 id: doc.id,
+                userId: userid,
                 username: username,
                 avatarUrl: avatarUrl,
-                fullname: fullname,
+                fullName: fullName,
                 lastActive: lastActive,
               };
             })
         ).then(setChats)
       );
   }, []);
+  // console.log(userId)
 
   return chats.map((chat) => {
     let active;
@@ -123,11 +128,16 @@ function ChatList({ openedChat, setOpenedChat }) {
         {...chat}
         onClick={() => setOpenedChat(chat.id)}
       >
-        <UserPhoto size={40} src={chat.avatarUrl} alt={chat.username}>
+        <UserPhoto
+          size={40}
+          src={chat.avatarUrl}
+          alt={chat.username}
+          // onClick={(e) => navigateToPage(e, "/profile/" + chat.userId)}
+        >
           {chat.username?.[0]?.toUpperCase()}
         </UserPhoto>
         <UserDetails>
-          <div className="username">{chat.username}</div>
+          <div className="username">{chat.fullName}</div>
           <div className="last-active">Active {chat.lastActive}</div>
         </UserDetails>
       </ChatListItem>

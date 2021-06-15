@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import Geocode from "react-geocode";
 
 import { Form, Button, Input, Select } from "antd";
 import FormItem from "antd/lib/form/FormItem";
@@ -27,10 +26,9 @@ const CenteredWrap = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 3%;
+  margin-top: 2%;
 `;
 const MainContainer = styled.div`
-  margin-top: 30px;
   width: 570px;
   border: 1px solid #ffefdf;
   border-radius: 4px;
@@ -61,6 +59,8 @@ const FooterContainer = styled.div`
   margin-bottom: 30px;
   padding: 24px;
   margin-top: 10px;
+    margin-bottom: 30px;
+
   background-color: white;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
@@ -146,7 +146,6 @@ async function handlePlaceSelect(updateQuery) {
   const addressObject = autoComplete.getPlace();
   const query = addressObject.formatted_address;
   updateQuery(query);
-  // console.log(addressObject);
 }
 
 function SignUp() {
@@ -167,8 +166,6 @@ function SignUp() {
     history.push(linkTo);
   };
 
-  Geocode.setApiKey("AIzaSyCq_jXEmB0Pcyqi966HrXpjhax8iigQHLQ");
-  Geocode.setLanguage("ro");
   useEffect(() => {
     loadScript(
       `https://maps.googleapis.com/maps/api/js?key=AIzaSyCq_jXEmB0Pcyqi966HrXpjhax8iigQHLQ&libraries=places`,
@@ -176,18 +173,6 @@ function SignUp() {
     );
   }, [setCity]);
   const { Option } = Select;
-
-  // useEffect(() => {
-  //   Geocode.fromAddress("Eiffel Tower").then(
-  //     (response) => {
-  //       const { lat, lng } = response.results[0].geometry.location;
-  //       console.log(lat, lng);
-  //     },
-  //     (error) => {
-  //       console.error(error);
-  //     }
-  //   );
-  // });
 
   const handleSignup = (e) => {
     e.preventDefault();

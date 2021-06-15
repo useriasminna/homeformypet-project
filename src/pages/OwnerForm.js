@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import AppHeader from "components/common/AppHeader";
-// import AppFooter from "components/common/AppFooter";
 import { CameraOutlined } from "@ant-design/icons";
 import AvatarUploadModal from "components/AvatarUploadModal";
 import { auth, db } from "utils/firebase";
@@ -9,6 +7,8 @@ import SectionBreak from "components/common/SectionBreak";
 import { Form, Input, Button, Divider, Avatar, notification } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 import { useHistory } from "react-router";
+import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
 
 const OwnerFormBody = styled.body`
   background-color: #fffaf0;
@@ -93,8 +93,7 @@ const PetsDetails = styled.div`
   }
 `;
 const AnimalsContainer = styled.div`
-  overflow: overlay;
-  height: 400px;
+  height: 410px;
   padding: 50px;
 `;
 const AnimalFormContainer = styled.div`
@@ -144,7 +143,6 @@ function OwnerForm() {
 
   const [animalsList, setAnimalsList] = useState([
     {
-      id: auth.currentUser.uid,
       petType: "",
       name: "",
       age: "",
@@ -155,7 +153,7 @@ function OwnerForm() {
 
   useEffect(
     () => auth.onAuthStateChanged((user) => setProfilePicture(user.photoURL)),
-    []
+    [profilePicture]
   );
 
   const openNotificationPetDetailsError = (type) => {
@@ -207,7 +205,7 @@ function OwnerForm() {
       openNotificationAvatarError("error");
     } else {
       await batch.commit();
-      history.push("/profile");
+      history.push("/home");
     }
   };
 
@@ -231,7 +229,6 @@ function OwnerForm() {
     setAnimalsList([
       ...animalsList,
       {
-        petId: auth.currentUser.uid,
         petType: "",
         name: "",
         age: "",
@@ -242,7 +239,6 @@ function OwnerForm() {
 
   return (
     <OwnerFormBody>
-      <AppHeader />
       <FormContainer>
         <FormDivider orientation="left">
           <strong>BECOME PET OWNER</strong>{" "}
@@ -264,6 +260,7 @@ function OwnerForm() {
             isOpened={isModalOpen}
             setIsOpen={setIsModalOpen}
             setAvatar={setProfilePicture}
+            updateDb="false"
           />
         </UserDetails>
         <SectionBreak />
@@ -274,84 +271,92 @@ function OwnerForm() {
               <Required>* </Required>2. Complete the details about your pet/pets{" "}
             </strong>
           </div>
-          <AnimalsContainer>
-            {animalsList.map((x, i) => {
-              return (
-                <AnimalFormContainer key={i} className="box">
-                  <Form>
-                    <FormItem
-                      label="Animal"
-                      rules={[
-                        { required: true, message: "this field is required" },
-                      ]}
-                    >
-                      <Input
-                        placeholder="cat/dog/other"
-                        name="petType"
-                        value={x.petType}
-                        onChange={(e) => handleInputChange(e, i)}
-                      />
-                    </FormItem>
-                    <FormItem
-                      label="Name"
-                      rules={[
-                        { required: true, message: "this field is required" },
-                      ]}
-                    >
-                      <Input
-                        name="name"
-                        value={x.name}
-                        onChange={(e) => handleInputChange(e, i)}
-                      />
-                    </FormItem>
+          <SimpleBar style={{ maxHeight: 410 }}>
+            <AnimalsContainer>
+              {animalsList.map((x, i) => {
+                return (
+                  <AnimalFormContainer key={i} className="box">
+                    <Form>
+                      <FormItem
+                        label="Animal"
+                        rules={[
+                          {
+                            required: true,
+                            message: "this field is required",
+                          },
+                        ]}
+                      >
+                        <Input
+                          placeholder="cat/dog/other"
+                          name="petType"
+                          value={x.petType}
+                          onChange={(e) => handleInputChange(e, i)}
+                        />
+                      </FormItem>
+                      <FormItem
+                        label="Name"
+                        rules={[
+                          {
+                            required: true,
+                            message: "this field is required",
+                          },
+                        ]}
+                      >
+                        <Input
+                          name="name"
+                          value={x.name}
+                          onChange={(e) => handleInputChange(e, i)}
+                        />
+                      </FormItem>
 
-                    <Form.Item
-                      label="Age"
-                      rules={[
-                        { required: true, message: "Missing description" },
-                      ]}
-                    >
-                      <Input
-                        name="age"
-                        value={x.age}
-                        onChange={(e) => handleInputChange(e, i)}
-                      />
-                    </Form.Item>
+                      <Form.Item
+                        label="Age"
+                        rules={[
+                          { required: true, message: "Missing description" },
+                        ]}
+                      >
+                        <Input
+                          name="age"
+                          value={x.age}
+                          onChange={(e) => handleInputChange(e, i)}
+                        />
+                      </Form.Item>
 
-                    <Form.Item
-                      label="Description"
-                      rules={[
-                        { required: true, message: "Missing description" },
-                      ]}
-                    >
-                      <TextArea
-                        name="description"
-                        value={x.description}
-                        onChange={(e) => handleInputChange(e, i)}
-                        autoSize={{ minRows: 3, maxRows: 5 }}
-                      />
-                    </Form.Item>
+                      <Form.Item
+                        label="Description"
+                        rules={[
+                          { required: true, message: "Missing description" },
+                        ]}
+                      >
+                        <TextArea
+                          name="description"
+                          value={x.description}
+                          onChange={(e) => handleInputChange(e, i)}
+                          autoSize={{ minRows: 3, maxRows: 5 }}
+                        />
+                      </Form.Item>
 
-                    <div className="btn-box">
-                      {animalsList.length !== 1 && (
-                        <RemoveButton
-                          className="mr10"
-                          onClick={() => handleRemoveClick(i)}
-                        >
-                          Remove
-                        </RemoveButton>
-                      )}
-                      {animalsList.length - 1 === i && (
-                        <AddButton onClick={handleAddClick}>
-                          Add another pet
-                        </AddButton>
-                      )}
-                    </div>
-                  </Form>
-                </AnimalFormContainer>
-              );
-            })}
-          </AnimalsContainer>
+                      <div className="btn-box">
+                        {animalsList.length !== 1 && (
+                          <RemoveButton
+                            className="mr10"
+                            onClick={() => handleRemoveClick(i)}
+                          >
+                            Remove
+                          </RemoveButton>
+                        )}
+                        {animalsList.length - 1 === i && (
+                          <AddButton onClick={handleAddClick}>
+                            Add another pet
+                          </AddButton>
+                        )}
+                      </div>
+                    </Form>
+                  </AnimalFormContainer>
+                );
+              })}
+            </AnimalsContainer>
+          </SimpleBar>
           <FormItem>
             <SubmitButton
               type="primary"

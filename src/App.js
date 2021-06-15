@@ -8,18 +8,18 @@ import {
 import firebase, { auth, db } from "utils/firebase";
 import createActivityDetector from "activity-detector";
 
-import Home from "pages/Home";
+import FirstTime from "pages/FirstTime";
 import SignUp from "pages/SignUp";
 import LogIn from "pages/LogIn";
 import Profile from "pages/Profile";
 import Messages from "pages/Messages";
-import AppLayout from "components/common/AppLayout";
-import Explore from "pages/Explore";
-import PostDetails from "pages/PostDetails";
+import NavAppLayout from "components/common/NavAppLayout";
+
 import ResetPassword from "pages/ResetPassword";
 import Welcome from "pages/Welcome";
 import OwnerForm from "pages/OwnerForm";
 import SitterForm from "pages/SitterForm";
+import Home from "pages/Home";
 
 function useIdle() {
   const [isIdle, setIsIdle] = useState(false);
@@ -68,37 +68,38 @@ function App() {
 
   if (authentication.loading) return null;
   return authentication.loggedIn ? (
-    <Router basename="/">
+    <Router>
       <Switch>
         <Route exact path="/signup">
-          <Redirect to="/welcome" />
+          <Redirect to="/home" />
         </Route>
-        <Route exact path="/login"></Route>
-        <Route exact path="/welcome" component={Welcome} />
-        <Route exact path="/ownerform" component={OwnerForm} />
-        <Route exact path="/sitterform" component={SitterForm} />
-
-        <AppLayout>
-          <Route exact path="/direct" component={Messages} />
-          <Route exact path="/explore" component={Explore} />
+        <Route exact path="/login">
+          {/* <Redirect to="/home" /> */}
+        </Route>
+        <Route exact path="/resetpassword">
+          <Redirect to="/home" />
+        </Route>
+        <Route exact path="/">
+          <Redirect to="/home" />
+        </Route>
+        <NavAppLayout>
+          <Route exact path="/home" component={Home} />
           <Route path="/profile/:id" component={Profile} />
+          <Route exact path="/direct" component={Messages} />
 
-          <Route path="/post/:postid">
-            <PostDetails />
-          </Route>
-        </AppLayout>
+          <Route exact path="/welcome" component={Welcome} />
+          <Route exact path="/ownerform" component={OwnerForm} />
+          <Route exact path="/sitterform" component={SitterForm} />
+        </NavAppLayout>
       </Switch>
     </Router>
   ) : (
     <Router>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={FirstTime} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/resetpassword" component={ResetPassword} />
-        {/* <Route path="/">
-          <Redirect to="/login" />
-        </Route> */}
       </Switch>
     </Router>
   );

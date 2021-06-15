@@ -49,7 +49,7 @@ function LogIn() {
     e.preventDefault();
     auth
       .signInWithEmailAndPassword(email, password)
-      .then(async () => history.push("/profile"))
+      .then(async () => history.push("/home"))
       .catch((err) => setErrorMessage(err.message));
   };
 
@@ -57,54 +57,58 @@ function LogIn() {
     <LogInBody>
       <CenteredWrap>
         <FormMainContainer onSubmit={handleLogin}>
-          <FormLogo />
+          <Form>
+            <FormLogo />
 
-          <Form.Item
-            name="email"
-            rules={[
-              { required: true, message: "Please introduce your email!" },
-            ]}
-          >
-            <Input
-              prefix={<MailOutlined />}
-              placeholder="Email"
-              type="email"
-              value={email}
-              style={{ width: 400, marginTop: 30 }}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: "Please input your Password!" }]}
-          >
-            <Input.Password
-              prefix={<LockOutlined />}
-              placeholder="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              iconRender={(visible) =>
-                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-              }
-            />
-            <div style={{ width: 400, whiteSpace: "normal", height: 35 }}>
-              <Error>{errorMessage}</Error>
-            </div>
-          </Form.Item>
-          <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox checked>Remember me</Checkbox>
+            <Form.Item
+              name="email"
+              rules={[
+                { required: true, message: "Please introduce your email!" },
+              ]}
+            >
+              <Input
+                prefix={<MailOutlined />}
+                placeholder="Email"
+                type="email"
+                value={email}
+                style={{ width: 400, marginTop: 30 }}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </Form.Item>
-            <a className="login-form-forgot" href="/resetpassword">
-              Forgot password?
-            </a>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" onClick={handleLogin}>
-              Log in
-            </Button>
-          </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                { required: true, message: "Please input your Password!" },
+              ]}
+            >
+              <Input.Password
+                prefix={<LockOutlined />}
+                placeholder="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+              />
+              <div style={{ width: 400, whiteSpace: "normal", height: 35 }}>
+                <Error>{errorMessage}</Error>
+              </div>
+            </Form.Item>
+            <Form.Item>
+              <Form.Item name="remember" valuePropName="checked" noStyle>
+                <Checkbox checked>Remember me</Checkbox>
+              </Form.Item>
+              <a className="login-form-forgot" href="/resetpassword">
+                Forgot password?
+              </a>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" onClick={handleLogin}>
+                Log in
+              </Button>
+            </Form.Item>
+          </Form>
         </FormMainContainer>
         <FormFooterContainer>
           <span>

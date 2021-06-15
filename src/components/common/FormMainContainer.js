@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.form`
+const Container = styled.div`
   width: 500px;
   border: 1px solid #ffefdf;
   border-radius: 4px;

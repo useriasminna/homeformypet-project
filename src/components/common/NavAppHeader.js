@@ -7,8 +7,6 @@ import { useHistory } from "react-router";
 import {
   HomeOutlined,
   MessageOutlined,
-  CompassOutlined,
-  UploadOutlined,
   ExportOutlined,
 } from "@ant-design/icons";
 
@@ -45,7 +43,7 @@ const Header = styled.div`
 `;
 const LogoContainer = styled.div`
   img {
-    height: 55px;
+    height: 47px;
     max-width: 100%;
     object-fit: contain;
     position: absolute;
@@ -56,8 +54,9 @@ const LogoContainer = styled.div`
 const NavbarMenu = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 50px;
-  font-size: 22px;
+  margin-right: 175px;
+  font-size: 20px;
+  color: #794c36;
   > * + * {
     margin-left: 20px;
   }
@@ -83,55 +82,102 @@ const MyAvatar = styled(Avatar)`
     object-fit: cover;
   }
 `;
-function NavAppHeader(userPhoto, username, setIsOpenedModal, openUploadModal) {
+const LogOutButton = styled.button`
+  font-size: 12px;
+  text-align: center;
+  border: none;
+  width: 70px;
+  background-color: #3f913f;
+  border-radius: 5px;
+  padding: 3px;
+  margin-right: 120px;
+  color: white;
+  opacity: 1;
+  transition: 0.3s;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+  :hover {
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  @media (max-width: 735px) {
+    justify-content: space-between;
+    width: 100%;
+  }
+`;
+
+function NavAppHeader(
+  petType,
+  profilePicture,
+  username,
+  setIsOpenedModal,
+  openUploadModal
+) {
   const history = useHistory();
   const navigateToPage = (e, linkTo) => {
     e.preventDefault();
     history.push(linkTo);
   };
-
   return (
     <Header>
       <div className="container">
         <LogoContainer>
           <a
             className="logo-link"
-            href="/"
-            onClick={(e) => navigateToPage(e, "/")}
+            href="/home"
+            onClick={(e) => navigateToPage(e, "/home")}
           >
             <img src={AppLogo} alt="instagram logo" />
           </a>
         </LogoContainer>
-        <NavbarMenu>
-          <a href="/" onClick={(e) => navigateToPage(e, "/")}>
-            <HomeOutlined />
-          </a>
-          <a href="/direct" onClick={(e) => navigateToPage(e, "/direct")}>
-            <MessageOutlined />
-          </a>
-          <a href="/explore" onClick={(e) => navigateToPage(e, "/explore")}>
-            <CompassOutlined />
-          </a>
-          <UploadOutlined key="upload" onClick={openUploadModal} />
-          <ExportOutlined
+        {petType.petType === "" ? (
+          <LogOutButton
             key="logout"
             onClick={(e) => {
               auth.signOut();
               navigateToPage(e, "/login");
             }}
-          />
-          <a
-            className="profile-link"
-            href={`/profile/${auth.currentUser.uid}`}
-            onClick={(e) =>
-              navigateToPage(e, "/profile/" + auth.currentUser.uid)
-            }
           >
-            <MyAvatar size={25} src={userPhoto.userPhoto} alt="Profile">
-              {userPhoto.username?.[0]?.toUpperCase()}
-            </MyAvatar>
-          </a>
-        </NavbarMenu>
+            Log Out
+          </LogOutButton>
+        ) : (
+          <NavbarMenu>
+            <a
+              title="home"
+              href="/home"
+              onClick={(e) => navigateToPage(e, "/home")}
+            >
+              <HomeOutlined />
+            </a>
+            <a
+              title="chat"
+              href="/direct"
+              onClick={(e) => navigateToPage(e, "/direct")}
+            >
+              <MessageOutlined />
+            </a>
+            <ExportOutlined
+              title="logout"
+              key="logout"
+              onClick={(e) => {
+                auth.signOut();
+                navigateToPage(e, "/login");
+              }}
+            />
+            <a
+              title="profile"
+              className="profile-link"
+              href={`/profile/${auth.currentUser.uid}`}
+              onClick={(e) =>
+                navigateToPage(e, "/profile/" + auth.currentUser.uid)
+              }
+            >
+              <MyAvatar size={22} src={petType.profilePicture} alt="Profile">
+                {petType.username?.[0]?.toUpperCase()}
+              </MyAvatar>
+            </a>
+          </NavbarMenu>
+        )}
       </div>
     </Header>
   );

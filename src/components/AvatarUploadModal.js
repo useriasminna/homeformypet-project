@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { message, Modal, Progress, Upload } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
-import { auth, storage } from "utils/firebase";
+import { auth, db, storage } from "utils/firebase";
 import { nanoid } from "nanoid";
 
-function AvatarUploadModal({ isOpened, setIsOpen }) {
+function AvatarUploadModal({ isOpened, setIsOpen, setAvatar, updateDb }) {
   const [file, setFile] = useState();
   const [progress, setProgress] = useState(0);
 
@@ -48,6 +48,20 @@ function AvatarUploadModal({ isOpened, setIsOpen }) {
             await auth.currentUser.updateProfile({
               photoURL: imageUrl,
             });
+
+            setAvatar(imageUrl);
+
+            if (updateDb === "true") {
+              const updateProfilePicture = async () => {
+                db.collection("users").doc(auth.currentUser.uid).set(
+                  {
+                    profilePicture: imageUrl,
+                  },
+                  { merge: true }
+                );
+              };
+              updateProfilePicture();
+            }
 
             setIsOpen(false);
             setFile();

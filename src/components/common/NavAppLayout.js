@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { auth, db } from "utils/firebase";
 import UploadModal from "components/PostUploadModal";
 import NavAppHeader from "./NavAppHeader";
-// import AppFooter from "./AppFooter";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -13,19 +12,12 @@ const AppContainer = styled.div`
   min-height: 100vh;
 `;
 
-// const AppContent = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   /* margin: 20px 100px; */
-//   flex: 1;
-// `;
-
-function AppLayout({ children }) {
+function NavAppLayout({ children }) {
   const [user, setUser] = useState();
   // const[]
   const [username, setUsername] = useState("");
-  const [userPhoto, setUserPhoto] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const [type, setType] = useState("");
 
   const [isOpenedModal, setIsOpenedModal] = useState(false);
 
@@ -39,29 +31,30 @@ function AppLayout({ children }) {
           if (snapshot.exists) {
             // setId(snapshot.data().firstName)
             setUsername(snapshot.data().firstName);
-            setUserPhoto(snapshot.data().profilePicture);
+            setProfilePicture(snapshot.data().profilePicture);
+            setType(snapshot.data().type);
           }
         });
     });
     return () => unsubscribe();
   }, [user]);
+  // console.log(profilePicture,type, username)
   return (
     <AppContainer>
       <NavAppHeader
+        petType={type}
         username={username}
         setIsOpenedModal={setIsOpenedModal}
-        userPhoto={userPhoto}
+        profilePicture={profilePicture}
       ></NavAppHeader>
-      {/* <AppContent className="container">{children}</AppContent> */}
       {children}
       <UploadModal
         isOpened={isOpenedModal}
         setIsOpen={setIsOpenedModal}
         userid={user?.uid}
       />
-      {/* <AppFooter /> */}
     </AppContainer>
   );
 }
 
-export default AppLayout;
+export default NavAppLayout;

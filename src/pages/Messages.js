@@ -5,13 +5,28 @@ import ChatList from "components/ChatList";
 import Chat from "components/Chat";
 import NewChatModal from "components/NewChatModal";
 import { auth, db } from "utils/firebase";
+import AppFooter from "components/common/AppFooter";
 
-const MessagesPageContainer = styled.div`
+const MessagesBody = styled.div`
   width: 100%;
+  background-color: #fafafa;
+  height: 100%;
+`;
+const MessagesPageContainer = styled.div`
+  margin: 0 auto;
+  height: 560px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background-color: white;
+
+  width: 70%;
   flex: 1;
   border: 1px solid lightgray;
   display: flex;
   border-radius: 4px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
   > * {
     flex: 1;
   }
@@ -66,32 +81,38 @@ function Messages() {
   useEffect(() => {
     db.collection("users")
       .doc(auth.currentUser.uid)
-      .onSnapshot((snpashot) => {
-        if (snpashot.exists) setUsername(snpashot.data().firstName);
+      .onSnapshot((snapshot) => {
+        if (snapshot.exists)
+          setUsername(
+            snapshot.data().firstName + " " + snapshot.data().lastName
+          );
       });
   }, []);
 
   return (
-    <MessagesPageContainer>
-      <ListContainer>
-        <ListHeader>
-          <UsernameHeader>{username}</UsernameHeader>
-          <FormIcon onClick={() => setIsModalOpened(true)} />
-        </ListHeader>
-        <ChatListContainer>
-          <ChatList openedChat={openedChat} setOpenedChat={setOpenedChat} />
-        </ChatListContainer>
-      </ListContainer>
-      <Chat
-        chatid={openedChat}
-        openNewChatModal={() => setIsModalOpened(true)}
-      />
-      <NewChatModal
-        isOpened={isModalOpened}
-        setIsOpened={setIsModalOpened}
-        setOpenedChat={setOpenedChat}
-      />
-    </MessagesPageContainer>
+    <MessagesBody>
+      <MessagesPageContainer>
+        <ListContainer>
+          <ListHeader>
+            <UsernameHeader>{username}</UsernameHeader>
+            <FormIcon onClick={() => setIsModalOpened(true)} />
+          </ListHeader>
+          <ChatListContainer>
+            <ChatList openedChat={openedChat} setOpenedChat={setOpenedChat} />
+          </ChatListContainer>
+        </ListContainer>
+        <Chat
+          chatid={openedChat}
+          openNewChatModal={() => setIsModalOpened(true)}
+        />
+        <NewChatModal
+          isOpened={isModalOpened}
+          setIsOpened={setIsModalOpened}
+          setOpenedChat={setOpenedChat}
+        />
+      </MessagesPageContainer>
+      <AppFooter />
+    </MessagesBody>
   );
 }
 

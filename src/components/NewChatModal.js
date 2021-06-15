@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Avatar, Modal } from "antd";
 import firebase, { auth, db } from "utils/firebase";
 import styled from "styled-components";
+import { RiEmotionSadLine } from "react-icons/ri";
 
 const UsersModal = styled(Modal)`
   .ant-modal-body {
@@ -35,20 +36,49 @@ const UserDetails = styled.div`
     opacity: 0.75;
   }
 `;
-
+const EmptyUserContainer = styled.div`
+  width: 80%;
+  padding: 10px;
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  text-align: center;
+  font-style: italic;
+  svg {
+    font-size: 28px;
+    margin: 0 auto;
+  }
+`;
 function NewChatModal({ isOpened, setIsOpened, setOpenedChat }) {
-  const [users, setUsers] = useState([]);
+  const [following, setFollowing] = useState([]);
 
   useEffect(() => {
-    db.collection("users")
-      .where("__name__", "!=", auth.currentUser.uid)
-      .onSnapshot((snapshot) =>
-        setUsers(
-          snapshot.docs.map((doc) => {
-            return { id: doc.id, ...doc.data() };
+    db.collection("follows").onSnapshot((snapshot) => {
+      Promise.all(
+        snapshot.docs
+          .filter((doc) => doc.data().follower === auth.currentUser.uid)
+          .map(async (doc) => {
+            let fullName = "";
+            let profilePicture = "";
+            await db
+              .collection("users")
+              .doc(doc.data().following)
+              .get()
+              .then((userDoc) => {
+                fullName =
+                  userDoc.data().firstName + " " + userDoc.data().lastName;
+                profilePicture = userDoc.data().profilePicture;
+              });
+
+            return {
+              id: doc.id,
+              userId: doc.data().following,
+              fullName: fullName,
+              profilePicture: profilePicture,
+            };
           })
-        )
-      );
+      ).then(setFollowing);
+    });
   }, []);
 
   const handleCreateChat = (firstUser, secondUser) => {
@@ -100,22 +130,32 @@ function NewChatModal({ isOpened, setIsOpened, setOpenedChat }) {
       title="New chat"
       visible={isOpened}
       onCancel={() => setIsOpened(false)}
+      onOk={() => setIsOpened(false)}
     >
-      {users.map((user) => (
-        <User
-          key={user.id}
-          {...user}
-          onClick={() => handleCreateChat(auth.currentUser.uid, user.id)}
-        >
-          <UserPhoto size={40} src={user.profilePicture} alt={user.userName}>
-            {user.userName?.[0]?.toUpperCase()}
-          </UserPhoto>
-          <UserDetails>
-            <div className="username">{user.userName}</div>
-            <div className="fullname">{user.fullName}</div>
-          </UserDetails>
-        </User>
-      ))}
+      {following.length !== 0 ? (
+        following.map((user) => (
+          <User
+            key={user.id}
+            {...user}
+            onClick={() => handleCreateChat(auth.currentUser.uid, user.userId)}
+          >
+            <UserPhoto size={40} src={user.profilePicture} alt={user.fullName}>
+              {user.fullName?.[0]?.toUpperCase()}
+            </UserPhoto>
+            <UserDetails>
+              <div className="fullName">{user.fullName}</div>
+            </UserDetails>
+          </User>
+        ))
+      ) : (
+        <EmptyUserContainer>
+          <RiEmotionSadLine />
+          <span>
+            You don&#39;t have anyone in your list of favourites. Please add the
+            person you want to chat with.
+          </span>
+        </EmptyUserContainer>
+      )}
     </UsersModal>
   );
 }
