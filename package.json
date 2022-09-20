@@ -1,0 +1,67 @@
+{
+  "name": "instagram-clone",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@atomap/use-places-autocomplete": "^1.0.4",
+    "@react-google-maps/api": "^2.2.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.8.1",
+    "activity-detector": "^3.0.0",
+    "bootstrap-icons": "^1.5.0",
+    "eslint": "^7.27.0",
+    "firebase": "^8.6.3",
+    "google-maps-react": "^2.0.6",
+    "history": "^5.0.0",
+    "install": "^0.13.0",
+    "nanoid": "^3.1.23",
+    "npm": "^7.15.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-geocode": "^0.2.3",
+    "react-google-maps": "^9.4.5",
+    "react-google-maps-loader": "^4.3.0",
+    "react-icons": "^4.2.0",
+    "react-places-autocomplete": "^7.3.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "simplebar": "^5.3.3",
+    "simplebar-react": "^2.3.3",
+    "styled-components": "^5.2.1",
+    "web-vitals": "^1.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^4.26.0",
+    "antd": "^4.13.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1",
+    "typescript": "^4.3.2"
+  }
+}
