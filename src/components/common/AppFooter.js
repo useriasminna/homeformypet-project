@@ -9,12 +9,8 @@ const Footer = styled.div`
   width: 100%;
   height: 100px;
   padding: 5px;
-  border-top: 1px solid #eee1cefa;
   text-align: center;
-
-  background-image: linear-gradient(to top right, #cdb07b, #ffffff);
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
-    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  background-image: linear-gradient(#ffffff, #f5e4d1);
   strong {
     color: #874c00;
   }

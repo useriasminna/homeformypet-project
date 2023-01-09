@@ -27,7 +27,6 @@ const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #fafafa;
 `;
 
 const ProfileDetailsUpSection = styled.div`
@@ -39,7 +38,8 @@ const ProfileDetailsUpSection = styled.div`
   margin-bottom: 20px;
   margin-top: 40px;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 `;
 
 const CameraIcon = styled(CameraOutlined)`
@@ -114,7 +114,8 @@ const ProfileDetailsDownSection = styled.div`
   justify-items: baseline;
   justify-content: space-between;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 `;
 const Experience = styled.span`
   padding: 10px;
@@ -244,10 +245,11 @@ const EditProfileButton = styled.button`
   padding: 5px;
   font-size: 15px;
   width: 150px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid #cfcdcd;
   margin: 55px 4px;
 
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.05) 0px 8px 32px;
 
   svg {
     margin-bottom: -2px;
@@ -255,9 +257,9 @@ const EditProfileButton = styled.button`
     font-size: 15px;
   }
   :hover {
-    border: 1px solid #d5d5d5;
     color: black;
     cursor: pointer;
+    background-color: #d3d3d3;
   }
 `;
 const FollowContainer = styled.div`

@@ -8,7 +8,7 @@ const FormLogoContainer = styled.div`
   justify-content: center;
 
   img {
-    height: 70px;
+    height: 90px;
     object-fit: contain;
   }
 `;

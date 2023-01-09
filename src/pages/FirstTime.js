@@ -43,7 +43,7 @@ const Header = styled.div`
 `;
 const LogoContainer = styled.div`
   img {
-    height: 55px;
+    height: 90px;
     max-width: 100%;
     object-fit: contain;
     position: absolute;
@@ -98,6 +98,7 @@ const AppPurposeContainer = styled.div`
   height: 40%;
   z-index: 2;
   left: 50%;
+  top: 15%;
   transform: translateX(-50%);
   justify-content: center;
   align-content: center;
@@ -108,17 +109,23 @@ const AppPurposeText = styled.span`
   display: flex;
   flex-direction: column;
   font-size: 19px;
-  text-align: justify;
+  text-align: center;
+
   a:hover {
     text-decoration: underline;
   }
 
   h1 {
-    color: #4c4632;
+    color: #42230d;
     text-align: center;
     font-weight: bolder;
     font-style: italic;
   }
+
+  h2 {
+    color: #4c4632;
+  }
+
   strong {
     color: #4c4632;
     font-style: italic;
@@ -188,18 +195,18 @@ function FirstTime() {
         <FadeCoverContainer />
         <AppPurposeContainer>
           <AppPurposeText>
-            <h1>About us</h1>
+            <h1>HomeForMyPet</h1>
+            <h2>-Our mission-</h2>
             <p>
               <strong>HomeForMyPet </strong>
               <strong>
                 {" "}
                 is a web app especialy designed to help building a comunity of
-                pet lovers who are willing to help each other.
-                <br />
-                For all pet owners who are looking for a temporary home for
-                their little friend, in a safe environment full of love, and for
-                those who are willing to help by hosting a pet, sharing the love
-                for animals , this is the right place to be.
+                pet lovers who are willing to help each other. For all pet
+                owners who are looking for a temporary home for their little
+                friend, in a safe environment full of love, and for those who
+                are willing to help by hosting a pet, sharing the love for
+                animals, this is the right place to be.
                 <br />
                 Either you&apos;re looking for a pet sitter, or want to help
                 other pet owners, please register to our website.

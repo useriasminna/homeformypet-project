@@ -38,15 +38,13 @@ const PlacesAutocomplete = (city) => {
   };
 
   return (
-    <>
-      <CityInput
-        id="autocompleteInput"
-        placeholder={"Enter a city location "}
-        type="text"
-        ref={placeInputRef}
-        defaultValue={city.city}
-      />
-    </>
+    <CityInput
+      id="autocompleteInput"
+      placeholder={"Enter a city location "}
+      type="text"
+      ref={placeInputRef}
+      defaultValue={city.city}
+    />
   );
 };
 

@@ -25,7 +25,7 @@ function Map(city) {
         setLongitude(lng);
       },
       (error) => {
-        console.error(error);
+        // console.error(error);
       }
     );
   });
@@ -47,12 +47,10 @@ function Map(city) {
     map.fitBounds(bounds);
     setMap(map);
   }, []);
-  console.log(map);
   const onUnmount = React.useCallback(function callback(map) {
     setMap(null);
   }, []);
 
-  console.log(center);
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}

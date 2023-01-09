@@ -26,7 +26,7 @@ const HomeCover = styled.div`
   flex-direction: column;
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-
+  z-index: 2;
   img {
     width: 100%;
     height: 600px;
@@ -50,22 +50,23 @@ const CoverTitle = styled.div`
   left: 50%;
   transform: translateX(-50%);
   font-size: 28px;
+  letter-spacing: 2px;
   font-style: italic;
   font-weight: bold;
-  font-family: "Merienda";
+  font-family: "Pacifico", cursive;
   top: 6%;
   z-index: 2;
-  color: #dcc08b;
+  color: #802c2b;
 `;
 const CoverButton = styled.button`
   width: 20px;
   height: 27px;
   position: absolute;
-  left: 57%;
+  left: 56%;
   font-size: 16px;
   font-style: italic;
   font-weight: bold;
-  top: 112px;
+  top: 116px;
   background-color: white;
   border: none;
   z-index: 5;
@@ -79,8 +80,7 @@ const DownSection = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  background-color: #e2d9c9;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  background-color: #fbf2e9;
   position: relative;
 `;
 const ExploreSittersContainer = styled.div`
@@ -142,7 +142,10 @@ const User = styled.div`
   cursor: pointer;
   padding: 10px 24px;
   margin-bottom: 20px;
-  background: rgba(255 255 255 / 64%);
+  background: rgba(255 255 255);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
   :hover {
     background: rgba(0, 0, 0, 0.05);
   }
@@ -165,18 +168,16 @@ const UserDetails = styled.div`
     opacity: 0.75;
   }
   div:nth-child(1) {
-    font-size: 15px;
     font-weight: bold;
     margin-bottom: 5px;
   }
   div:nth-child(2) {
-    font-family: "Merienda";
-
-    font-size: 15px;
+    color: #802c2b;
     margin-bottom: 3px;
+    font-weight: bold;
   }
   div:nth-child(3) {
-    font-size: 13px;
+    font-size: 15px;
     font-style: italic;
   }
 `;
@@ -311,7 +312,6 @@ function Home() {
           } else {
             favourite = "false";
           }
-          // console.log(favourite);
           return (
             <User
               key={sitter.id}
@@ -330,7 +330,7 @@ function Home() {
                   {sitter.firstName + " " + sitter.lastName}
                 </div>
                 <div>{sitter.slogan}</div>
-                <div>{sitter.experience.substring(0, 200) + "..."}</div>
+                <div>{'"' + sitter.experience.substring(0, 200) + '..."'}</div>
                 <FavouriteStateContainer>
                   {" "}
                   {favourite === "true" ? <AiFillStar /> : undefined}
@@ -356,9 +356,8 @@ function Home() {
       <HomeCover>
         <img src={homeCover} alt="pet cover"></img>
         <CoverTitle>
-          The pet sitters you&apos;re looking for are here.{" "}
+          The pet sitters you&apos;re looking for are here{" "}
         </CoverTitle>
-
         <CityContainer>
           {!loadMap ? (
             <div>Loading...</div>

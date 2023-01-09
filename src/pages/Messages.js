@@ -9,7 +9,6 @@ import AppFooter from "../components/common/AppFooter";
 
 const MessagesBody = styled.div`
   width: 100%;
-  background-color: #fafafa;
   height: 100%;
 `;
 const MessagesPageContainer = styled.div`
