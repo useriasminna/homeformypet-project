@@ -1,5 +1,5 @@
 {
-  "name": "instagram-clone",
+  "name": "homeformypet",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -75,5 +75,5 @@
   "bugs": {
     "url": "https://github.com/useriasminna/homeformypet-project/issues"
   },
-  "homepage": "https://github.com/useriasminna/homeformypet-project#readme"
+  "homepage": "."
 }
