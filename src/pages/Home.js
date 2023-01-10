@@ -385,14 +385,14 @@ function Home() {
             </SimpleBar>
           </Sitters>
         </ExploreSittersContainer>
-        <MapContainer id="map">
+        {/* <MapContainer id="map">
           <Map city={city}>
-            {/* <Marker
+            <Marker
               position={[+latitude, +longitude]}
               style={{ zIndex: "10" }}
-            ></Marker> */}
+            ></Marker>
           </Map>
-        </MapContainer>
+        </MapContainer> */}
       </DownSection>
 
       <AppFooter />
