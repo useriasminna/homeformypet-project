@@ -11,6 +11,7 @@ const containerStyle = {
 };
 
 function Map(city) {
+  console.log(city.city);
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
@@ -25,7 +26,7 @@ function Map(city) {
         setLongitude(lng);
       },
       (error) => {
-        // console.error(error);
+        console.error(error);
       }
     );
   });
