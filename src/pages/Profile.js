@@ -499,7 +499,6 @@ function Profile() {
           .collection("pets")
           .onSnapshot(async (snapshot) => {
             const petsCollection = snapshot.docs;
-            // console.log(filteredPets);
 
             return Promise.all(
               petsCollection.map(async (pet) => {

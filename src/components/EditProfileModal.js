@@ -89,7 +89,6 @@ const ElementInput = styled(Input)``;
 //   const addressObject = autoComplete.getPlace();
 //   const query = addressObject.formatted_address;
 //   updateQuery(query);
-//   // console.log(addressObject);
 // }
 
 function EditProfileModal({
@@ -180,7 +179,6 @@ function EditProfileModal({
       }
     );
   };
-  // console.log(cityState);
   return (
     <Modal
       title={title}

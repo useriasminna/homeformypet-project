@@ -111,7 +111,6 @@ function ChatList({ openedChat, setOpenedChat }) {
         ).then(setChats)
       );
   }, []);
-  // console.log(userId)
 
   return chats.map((chat) => {
     let active;

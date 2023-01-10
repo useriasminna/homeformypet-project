@@ -38,7 +38,6 @@ function NavAppLayout({ children }) {
     });
     return () => unsubscribe();
   }, [user]);
-  // console.log(profilePicture,type, username)
   return (
     <AppContainer>
       <NavAppHeader
