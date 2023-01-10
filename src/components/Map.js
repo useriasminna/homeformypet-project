@@ -59,7 +59,7 @@ function Map(city) {
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      {<Marker position={[" 47.1584549", "27.6014418"]} map={map}></Marker>}
+      {/* {<Marker position={[" 47.1584549", "27.6014418"]} map={map}></Marker>} */}
     </GoogleMap>
   ) : (
     <></>

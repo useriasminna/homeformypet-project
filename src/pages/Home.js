@@ -387,10 +387,10 @@ function Home() {
         </ExploreSittersContainer>
         <MapContainer id="map">
           <Map city={city}>
-            <Marker
+            {/* <Marker
               position={[+latitude, +longitude]}
               style={{ zIndex: "10" }}
-            ></Marker>
+            ></Marker> */}
           </Map>
         </MapContainer>
       </DownSection>
