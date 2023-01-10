@@ -12,29 +12,29 @@ const containerStyle = {
 
 function Map(city) {
   console.log(city.city);
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  // const [latitude, setLatitude] = useState("");
+  // const [longitude, setLongitude] = useState("");
 
   Geocode.setApiKey("AIzaSyCq_jXEmB0Pcyqi966HrXpjhax8iigQHLQ");
   Geocode.setRegion("ro");
 
-  useEffect(() => {
-    Geocode.fromAddress(city.city).then(
-      (response) => {
-        const { lat, lng } = response.results[0].geometry.location;
-        setLatitude(lat);
-        setLongitude(lng);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  });
+  // useEffect(() => {
+  //   Geocode.fromAddress(city.city).then(
+  //     (response) => {
+  //       const { lat, lng } = response.results[0].geometry.location;
+  //       setLatitude(lat);
+  //       setLongitude(lng);
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // });
 
-  const center = {
-    lat: +latitude,
-    lng: +longitude,
-  };
+  // const center = {
+  //   lat: +latitude,
+  //   lng: +longitude,
+  // };
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -55,7 +55,7 @@ function Map(city) {
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      center={center}
+      // center={center}
       zoom={10}
       onLoad={onLoad}
       onUnmount={onUnmount}
